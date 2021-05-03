@@ -6,8 +6,7 @@ export default class RestaurantsDAO {
             return;
         }
         try{
-            console.log(process.env.RESTREVIEWS_DB_URI)
-            restaurants = await conn.db(process.env.RESTREVIEWS_DB_URI).collection('restaurants')
+            restaurants = await conn.db(process.env.RESTREVIEWS_NS).collection('restaurants')
         } catch(e) {
             console.log(e.stack)
             console.error(`No se pudo conectar con la bd : ${e}`)
@@ -42,7 +41,7 @@ export default class RestaurantsDAO {
         const displayCursor = cursor.limit(restaurantsPerPage).skip(restaurantsPerPage * page)
 
         try{
-            const resturantsList = await displayCursor.toArray()
+            const restaurantsList = await displayCursor.toArray()
             const totalNumRestaurants = await restaurants.countDocuments(query)
             return {restaurantsList, totalNumRestaurants}
         } catch(e) {
